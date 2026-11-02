@@ -1,19 +1,19 @@
-﻿"""Shared style for all result figures in the paper.
+"""Shared style for all result figures in the paper.
 
 Figures are drawn at their final print size so that fonts are 6.5-9 pt in the PDF:
-full-width figures are W = 6.3 in wide (included with width=\\linewidth) and
-single-panel figures are W_HALF = 4.1 in wide (included with width=0.65\\linewidth).
+full-width figures are W = 5.4 in wide (the elsarticle preprint text width; included with width=\\linewidth) and
+single-panel figures are W_HALF = 3.5 in wide (included with width=0.65\\linewidth).
 Group names follow the paper text exactly (ours, no_apf, no_progress, vanilla, no_xy_apf).
-Each figure is written to paper/figures/ (2000 px wide RGB PNG); that folder is the
-one uploaded to Overleaf. No other copy is kept.
+Each figure is written to paper/figures/ as a vector PDF (fonts embedded, Type 42); that
+folder is the one uploaded to Overleaf.
 """
 import os
 
 import matplotlib as mpl
 from PIL import Image
 
-W = 6.3
-W_HALF = 4.1
+W = 5.4
+W_HALF = 3.5
 TRAIN_RADIUS = 0.03
 RADII = [0.03, 0.035, 0.04, 0.045, 0.05, 0.055]
 
@@ -28,6 +28,7 @@ def apply():
         "font.family": "sans-serif",
         "font.sans-serif": ["DejaVu Sans"],
         "axes.unicode_minus": False,
+        "pdf.fonttype": 42,
         "font.size": 8,
         "axes.labelsize": 8,
         "axes.titlesize": 9,
@@ -70,12 +71,17 @@ def legend_below(fig, ax, ncol, bottom):
 
 
 def save(fig, name):
-    fig.savefig(name, dpi=300, bbox_inches="tight", facecolor="white")
-    export(name)
+    """Write the figure as a vector PDF into paper/figures/ (name may end in .png or .pdf)."""
+    out_dir = os.path.join("paper", "figures")
+    os.makedirs(out_dir, exist_ok=True)
+    base = os.path.splitext(os.path.basename(name))[0]
+    path = os.path.join(out_dir, base + ".pdf")
+    fig.savefig(path, bbox_inches="tight", facecolor="white")
+    print(f"[saved] {path}")
 
 
 def export(name):
-    """Move an already saved 300-dpi PNG into paper/figures/ as a 2000-px-wide RGB file."""
+    """Legacy helper: move an already saved PNG into paper/figures/ as a 2000-px-wide RGB file."""
     im = Image.open(name).convert("RGB")
     if im.width > 2000:
         im = im.resize((2000, round(im.height * 2000 / im.width)), Image.LANCZOS)

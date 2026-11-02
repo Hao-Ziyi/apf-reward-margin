@@ -1,4 +1,4 @@
-﻿"""论文实验设置示意图（两张，训练设定 与 半径扫描 分开）。
+"""论文实验设置示意图（两张，训练设定 与 半径扫描 分开）。
 
 图 1  Paper_Figure_EnvSetup.png      —— 训练设定（ρ=0.03 m）：
     (a) 俯视 xy：两柱（含随机游走范围）、起点、目标采样区域、示例目标、直线路径、
@@ -42,7 +42,8 @@ plt.rcParams.update({
     "ytick.major.size": 2.5,
 })
 
-W_FIG = 6.3                                   # 整图宽（英寸），与论文单栏宽一致
+W_FIG = fs.W                                  # 整图宽（英寸）= 5.4，与 elsarticle preprint 正文宽一致
+S = fs.W / 6.3                               # 相对旧 6.3 in 设计的缩放：只缩子图尺寸，字号不变
 
 # ---- 几何常量（与 multi_obstacle_env.py 一致）----
 A = np.array([-0.07, 0.045])
@@ -92,13 +93,13 @@ def add_axes_in(fig, h_fig, left, bottom, w, h):
 def fig_train(rolls=None, out="Paper_Figure_EnvSetup.png"):
     """rolls=None：只画环境几何（用于 Setup 小节）；传入 rolls：叠加真实策略轨迹（用于结果小节）。"""
     h_fig = 3.1
-    pw = 2.62                                  # 子图宽（英寸）
+    pw = 2.62 * S                              # 子图宽（英寸）
     xspan, yspan = 0.55, 0.35                  # 两个子图数据跨度相同 → 等比例下框同高
     ph = pw * yspan / xspan                    # 子图高（英寸），由等比例反推
     bottom = 1.0
     fig = plt.figure(figsize=(W_FIG, h_fig))
-    ax_a = add_axes_in(fig, h_fig, 0.48, bottom, pw, ph)
-    ax_b = add_axes_in(fig, h_fig, 0.48 + pw + 0.62, bottom, pw, ph)
+    ax_a = add_axes_in(fig, h_fig, 0.48 * S, bottom, pw, ph)
+    ax_b = add_axes_in(fig, h_fig, 0.48 * S + pw + 0.62 * S, bottom, pw, ph)
 
     # ---------- (a) 俯视 ----------
     ax = ax_a
@@ -171,8 +172,7 @@ def fig_train(rolls=None, out="Paper_Figure_EnvSetup.png"):
     fig.legend(handles=handles, loc="lower center", bbox_to_anchor=(0.5, 0.0), ncol=2,
                frameon=False, columnspacing=1.8, handlelength=2.0)
 
-    fig.savefig(out, dpi=300, bbox_inches="tight", pad_inches=0.04)
-    fs.export(out)
+    fs.save(fig, out)
     print("[已保存]", out)
 
 
@@ -198,13 +198,13 @@ def fig_sweep(with_margin=False, out="Paper_Figure_RadiusSweep.png"):
     cmap = plt.cm.Blues(np.linspace(0.35, 0.95, len(radii)))
 
     h_fig = 3.1
-    pw_a, ph = 2.95, 2.0                       # (a) 宽、两个子图共同高度（英寸）
+    pw_a, ph = 2.95 * S, 2.0 * S               # (a) 宽、两个子图共同高度（英寸）
     xspan_a = 0.36
     yspan_a = xspan_a * ph / pw_a              # 等比例反推 (a) 的 y 跨度 → 框高 = ph
     bottom = 0.98
     fig = plt.figure(figsize=(W_FIG, h_fig))
-    ax_a = add_axes_in(fig, h_fig, 0.48, bottom, pw_a, ph)
-    ax_b = add_axes_in(fig, h_fig, 0.48 + pw_a + 0.6, bottom, 2.2, ph)
+    ax_a = add_axes_in(fig, h_fig, 0.48 * S, bottom, pw_a, ph)
+    ax_b = add_axes_in(fig, h_fig, 0.48 * S + pw_a + 0.6 * S, bottom, 2.2 * S, ph)
 
     # ---------- (a) 半径叠画 ----------
     ax = ax_a
@@ -274,8 +274,7 @@ def fig_sweep(with_margin=False, out="Paper_Figure_RadiusSweep.png"):
                    frameon=False, columnspacing=1.8, handletextpad=0.4, title="evaluation radius",
                    title_fontsize=6.5)
 
-    fig.savefig(out, dpi=300, bbox_inches="tight", pad_inches=0.04)
-    fs.export(out)
+    fs.save(fig, out)
     print("[已保存]", out)
 
 
