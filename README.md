@@ -2,7 +2,7 @@
 
 Code, trained models, and per-seed evaluation data for the paper
 
-> Ziyi Hao, *Positive Safety Margins from Artificial Potential Field Reward Augmentation for Size-Robust Obstacle Avoidance under Partial Observability* (manuscript submitted to Robotics and Autonomous Systems).
+> Ziyi Hao, *Positive Safety Margins from Artificial Potential Field Reward Augmentation for Size-Robust Obstacle Avoidance under Partial Observability*. Preprint: [arXiv:2611.02947](https://arxiv.org/abs/2611.02947) (under review at Robotics and Autonomous Systems).
 
 A reinforcement-learning controller for a simulated Franka Emika Panda (PandaReach-v3, PyBullet) must
 reach a goal past two cylindrical pillars whose size and exact position it does **not** observe
@@ -79,8 +79,31 @@ versions; the trained models and per-seed results used in the paper are included
 
 ## Citation
 
-If you use this code, please cite the paper (reference to be added after publication) and the
-archived release (Zenodo DOI to be added).
+If you use this code, please cite the paper and the archived release.
+
+```bibtex
+@misc{hao2026positive,
+  author       = {Hao, Ziyi},
+  title        = {Positive Safety Margins from Artificial Potential Field Reward Augmentation
+                  for Size-Robust Obstacle Avoidance under Partial Observability},
+  year         = {2026},
+  eprint       = {2611.02947},
+  archivePrefix = {arXiv},
+  url          = {https://arxiv.org/abs/2611.02947}
+}
+
+@software{hao2026code,
+  author    = {Hao, Ziyi},
+  title     = {Code and data for ``Positive Safety Margins from Artificial Potential Field
+               Reward Augmentation for Size-Robust Obstacle Avoidance under Partial Observability''},
+  year      = {2026},
+  publisher = {Zenodo},
+  version   = {v1.0.0},
+  doi       = {10.5281/zenodo.23885305}
+}
+```
+
+Archive: [doi:10.5281/zenodo.23885305](https://doi.org/10.5281/zenodo.23885305).
 
 ## License
 
